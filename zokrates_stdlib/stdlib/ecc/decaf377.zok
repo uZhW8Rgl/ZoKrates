@@ -1,0 +1,31 @@
+#pragma curve bls12_377
+
+import "./proofOfOwnership" as edwardsProofOfOwnership;
+import "./verifyEddsa" as edwardsSignature;
+
+
+// The `a` coefficient of the twisted Edwards curve
+const field EDWARDS_A = -1;
+
+// The `d` coefficient of the twisted Edwards curve
+const field EDWARDS_D = 3021;
+
+// The generator point
+const field[2] G = [
+    4959445789346820725352484487855828915252512307947624787834978378872129235627,  // Gx
+    6060471950081851567114691557659790004756535011754163002297540472747064943288  // Gy
+];
+
+const u32 bit_size = 253;
+
+
+def proofOfOwnership(field[2] pk, field sk) -> bool {
+
+    return edwardsProofOfOwnership(pk, sk, G, EDWARDS_A, EDWARDS_D, bit_size);
+}
+
+
+def verifyEddsa(field[2] R, field S, field[2] A, u32[8] M0, u32[8] M1) -> bool {
+
+    return edwardsSignature(R, S, A, M0, M1, G, EDWARDS_A, EDWARDS_D, bit_size);
+}

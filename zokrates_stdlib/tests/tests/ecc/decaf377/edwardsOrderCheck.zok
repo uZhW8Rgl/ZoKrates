@@ -1,0 +1,23 @@
+from "ecc/edwards" import orderCheck;
+from "ecc/decaf377" import EDWARDS_A, EDWARDS_D;
+
+def testOrderCheckTrue() -> bool {
+    field u = 4959445789346820725352484487855828915252512307947624787834978378872129235627;
+    field v = 6060471950081851567114691557659790004756535011754163002297540472747064943288;
+
+    assert(orderCheck([u, v], EDWARDS_A, EDWARDS_D));
+    return true;
+}
+
+def testOrderCheckFalse() -> bool {
+    field u = 0;
+    field v = 1;
+
+    assert(!orderCheck([u, v], EDWARDS_A, EDWARDS_D));
+    return true;
+}
+
+def main() {
+    assert(testOrderCheckFalse());
+    assert(testOrderCheckTrue());
+}
